@@ -10,12 +10,13 @@ Public repository. Follow https://github.com/xgic/ai for multi-repo standards.
 
 ## Scope
 
-- Docker Compose controller and Dev Container–oriented orchestration helpers  
-- Future: lifecycle/check/env CLI subcommands registered on `xgic` via entry points  
+- Docker Compose controller (product-agnostic)  
+- Lifecycle / check / env-status CLI subcommands on `xgic` via entry points (`xgic.cli.commands`)  
+- Defaults and overrides via flags or `XGIC_*` env vars — no Payload CMS product names  
 
 ## Out of scope
 
-- Payload CMS project creation / product commands → https://github.com/xgic/payload-cms-cli  
+- Payload CMS project creation / product secrets / create-payload-config → https://github.com/xgic/payload-cms-cli  
 - Thin CLI framework / env detection → https://github.com/xgic/cli  
 
 ## Rules

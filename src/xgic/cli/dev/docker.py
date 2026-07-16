@@ -86,9 +86,12 @@ class DockerComposeController:
             args.extend(services)
         self._run_compose(*args)
 
-    def down(self) -> None:
-        """Stop services (volumes are preserved)."""
-        self._run_compose("down")
+    def down(self, *, remove_volumes: bool = False) -> None:
+        """Stop services. Optionally remove named volumes (destructive)."""
+        if remove_volumes:
+            self._run_compose("down", "-v")
+        else:
+            self._run_compose("down")
 
     def rm_service(
         self,
