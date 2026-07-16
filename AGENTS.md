@@ -26,3 +26,4 @@ Public repository. Follow https://github.com/xgic/ai for multi-repo standards.
 - Dedicated issue-number branches; Conventional Commits  
 - Labels required on issues/PRs  
 - Python 3.14+; Apache-2.0; root `CODEOWNERS` (`@xgic`)  
+- **PyPI releases:** https://github.com/xgic/ai/blob/main/docs/python-package-release.md (OIDC + PyPA action; `uv` build/smoke)  
