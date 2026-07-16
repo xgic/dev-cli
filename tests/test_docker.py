@@ -62,6 +62,11 @@ class TestDockerComposeController:
             controller.down()
             mock_run.assert_called_with("down")
 
+    def test_down_remove_volumes(self, controller: DockerComposeController) -> None:
+        with patch.object(controller, "_run_compose") as mock_run:
+            controller.down(remove_volumes=True)
+            mock_run.assert_called_with("down", "-v")
+
     def test_rm_service(self, controller: DockerComposeController) -> None:
         with patch.object(controller, "_run_compose") as mock_run:
             controller.rm_service("postgres", force=True, stop=True)

@@ -4,8 +4,8 @@ build-backend = "hatchling.build"
 
 [project]
 name = "xgic-dev-cli"
-version = "0.1.0"
-description = "XGIC CLI Dev Container module - Docker Compose orchestration and environment helpers (xgic.cli.dev)."
+version = "0.2.0"
+description = "XGIC CLI Dev Container module - Docker Compose orchestration and xgic lifecycle commands (xgic.cli.dev)."
 readme = "README.md"
 license = { text = "Apache-2.0" }
 authors = [
@@ -41,6 +41,9 @@ Repository = "https://github.com/xgic/dev-cli"
 Issues = "https://github.com/xgic/dev-cli/issues"
 Documentation = "https://github.com/xgic/dev-cli#readme"
 Changelog = "https://github.com/xgic/dev-cli/releases"
+
+[project.entry-points."xgic.cli.commands"]
+dev = "xgic.cli.dev.plugin:register"
 
 [project.optional-dependencies]
 dev = [
