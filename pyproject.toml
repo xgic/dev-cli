@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "xgic-dev-cli"
-version = "0.2.0rc1"
+version = "0.2.0"
 description = "XGIC CLI Dev Container module - Docker Compose orchestration and xgic lifecycle commands (xgic.cli.dev)."
 readme = "README.md"
 license = { text = "Apache-2.0" }
@@ -13,7 +13,7 @@ authors = [
 ]
 requires-python = ">=3.14"
 dependencies = [
-    "xgic-cli>=0.2.0rc1",
+    "xgic-cli>=0.2.0",
     "rich>=13.7",
 ]
 keywords = [
