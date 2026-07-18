@@ -21,22 +21,22 @@ def _common_parent() -> argparse.ArgumentParser:
     parent.add_argument(
         "--compose-file",
         metavar="PATH",
-        help="Compose file path (or XGIC_COMPOSE_FILE)",
+        help="Docker Compose file path (or XGIC_COMPOSE_FILE)",
     )
     parent.add_argument(
         "--project",
         metavar="NAME",
-        help="Compose project name (or XGIC_COMPOSE_PROJECT)",
+        help="Docker Compose project name (or XGIC_COMPOSE_PROJECT)",
     )
     parent.add_argument(
         "--service",
         metavar="NAME",
-        help="Primary compose service (or XGIC_PRIMARY_SERVICE)",
+        help="Primary Docker Compose service (or XGIC_PRIMARY_SERVICE)",
     )
     parent.add_argument(
         "--profile",
         metavar="NAME",
-        help="Compose profile for up (or XGIC_COMPOSE_PROFILE)",
+        help="Docker Compose profile for up (or XGIC_COMPOSE_PROFILE)",
     )
     return parent
 
@@ -64,7 +64,7 @@ def register(
     build = subparsers.add_parser(
         "build",
         parents=[parent],
-        help="Build or rebuild compose services",
+        help="Build or rebuild Docker Compose services",
     )
     build.add_argument(
         "--no-cache",
@@ -76,7 +76,7 @@ def register(
     logs = subparsers.add_parser(
         "logs",
         parents=[parent],
-        help="Follow logs for compose services",
+        help="Follow logs for Docker Compose services",
     )
     logs.set_defaults(func=run_logs)
 
@@ -102,7 +102,7 @@ def register(
     check = subparsers.add_parser(
         "check",
         parents=[parent],
-        help="Diagnostic: compose services + environment context",
+        help="Diagnostic: Docker Compose services + environment context",
     )
     check.add_argument(
         "--json",

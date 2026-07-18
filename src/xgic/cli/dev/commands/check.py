@@ -37,7 +37,7 @@ def run_check(ctx: CommandContext) -> int:
         )
         print_info("Suggestion: Run `xgic up` to start services.")
 
-    print_info(f"Compose file: {docker.compose_file}")
+    print_info(f"Docker Compose file: {docker.compose_file}")
     print_info(f"Project: {docker.project_name}")
     if docker.primary_service:
         print_info(f"Primary service: {docker.primary_service}")

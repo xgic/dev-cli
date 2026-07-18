@@ -12,12 +12,12 @@ Architecture: [ADR-0005](https://github.com/xgic/ai/blob/main/docs/adr/0005-modu
 | Package | Role |
 |---------|------|
 | [xgic/cli](https://github.com/xgic/cli) | Thin core framework (`xgic`) |
-| **This repo** | Dev Container / Compose + lifecycle commands (`xgic.cli.dev`) |
+| **This repo** | Dev Container / Docker Compose + lifecycle commands (`xgic.cli.dev`) |
 | [xgic/payload-cms-cli](https://github.com/xgic/payload-cms-cli) | Payload CMS product module |
 
 ## Status
 
-**0.2.0 — B3 lifecycle commands.** Product-agnostic Compose library + registered `xgic` subcommands. Payload CMS–specific env regenerate / setup remains in **payload-cms-cli**.
+**0.2.0 — B3 lifecycle commands.** Product-agnostic Docker Compose library + registered `xgic` subcommands. Payload CMS–specific env regenerate / setup remains in **payload-cms-cli**.
 
 ## Requirements
 

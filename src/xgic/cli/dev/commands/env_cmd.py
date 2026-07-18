@@ -43,11 +43,11 @@ def run_env(ctx: CommandContext) -> int:
         print_info(f".env file not found at {ENV_FILE}")
 
     if services_ok:
-        print_success("Compose services: appear to be running")
+        print_success("Docker Compose services: appear to be running")
     else:
-        print_info("Compose services: not detected as running")
+        print_info("Docker Compose services: not detected as running")
 
-    print_info(f"Compose file: {docker.compose_file}")
+    print_info(f"Docker Compose file: {docker.compose_file}")
     print_info(f"Project: {docker.project_name}")
     print_info("Environment context: " + ctx.env.describe())
     return 0
