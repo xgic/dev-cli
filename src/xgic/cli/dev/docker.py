@@ -1,8 +1,9 @@
 """Docker Compose orchestration for Dev Container environments.
 
-Product-agnostic Compose controller. Callers inject compose file, project
-name, primary service, and optional profile. Payload CMS–specific defaults
-and config readers live in ``xgic.cli.payload`` (xgic/payload-cms-cli).
+Product-agnostic Docker Compose controller. Callers inject compose file,
+project name, primary service, and optional profile. Payload CMS–specific
+defaults and config readers live in ``xgic.cli.payload``
+(xgic/payload-cms-cli).
 """
 
 from __future__ import annotations

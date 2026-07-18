@@ -76,4 +76,4 @@ def test_run_env_status(capsys) -> None:
         make.return_value = docker
         assert run_env(ctx) == 0
     out = capsys.readouterr().out
-    assert "Development environment status" in out or "Compose" in out
+    assert "Development environment status" in out or "Docker Compose" in out
