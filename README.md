@@ -16,7 +16,7 @@ Standards hub: [xgic/ai](https://github.com/xgic/ai)
 
 ## Vision
 
-Environment orchestration should be **boring, documented, and AI-operable**. This package owns the **generic** lifecycle that every XGIC Dev Container product needs—`up`, `down`, `check`, logs, shell—without embedding Payload-specific or other product logic.
+Environment orchestration should be **predictable, documented, and AI-operable**. This package owns the **generic** lifecycle that every XGIC Dev Container product needs—`up`, `down`, `check`, logs, shell—without embedding Payload-specific or other product logic.
 
 Humans get a stable command map. AI agents get the same map in [AGENTS.md](AGENTS.md) instead of inventing Make targets or host-global installs.
 
