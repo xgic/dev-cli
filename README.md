@@ -51,7 +51,7 @@ Humans get a stable command map. AI agents get the same map in [AGENTS.md](AGENT
 ### Install (PyPI)
 
 ```bash
-uv pip install "xgic-cli>=0.2.0" "xgic-dev-cli>=0.2.0"
+uv pip install "xgic-cli>=0.2.1" "xgic-dev-cli>=0.2.0"
 xgic --help
 xgic up --help
 ```
@@ -129,7 +129,7 @@ docker.up(profile="postgres")
 ## Requirements
 
 - Python **3.14+**
-- `xgic-cli` ≥ 0.2.0
+- `xgic-cli` ≥ 0.2.1
 - Docker / Docker Compose on the host when running lifecycle commands
 
 ---
