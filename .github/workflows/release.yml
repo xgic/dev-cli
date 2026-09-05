@@ -101,7 +101,11 @@ jobs:
       - name: Install core + this package from TestPyPI
         env:
           VERSION: ${{ github.ref_name }}
+          UV_NO_CACHE: "1"
         run: |
+          # Domain module may release independently of core.
+          # --index-strategy unsafe-best-match: package may already exist on PyPI.
+          # --prerelease allow: required for X.Y.ZrcN pins.
           VER="${VERSION#v}"
           uv venv .venv-smoke
           source .venv-smoke/bin/activate
@@ -109,7 +113,10 @@ jobs:
           uv pip install \
             --index-url https://test.pypi.org/simple/ \
             --extra-index-url https://pypi.org/simple/ \
-            "xgic-cli==${VER}" \
+            --index-strategy unsafe-best-match \
+            --prerelease allow \
+            --refresh \
+            "xgic-cli>=0.2.1,<0.3" \
             "xgic-dev-cli==${VER}"
           xgic --version
           xgic up --help
@@ -152,15 +159,21 @@ jobs:
       - name: Install from PyPI
         env:
           VERSION: ${{ github.ref_name }}
+          UV_NO_CACHE: "1"
         run: |
           VER="${VERSION#v}"
           uv venv .venv-smoke
           source .venv-smoke/bin/activate
           uv pip install --upgrade pip
+          ok=0
           for i in 1 2 3 4 5; do
-            uv pip install "xgic-cli==${VER}" "xgic-dev-cli==${VER}" && break
+            if uv pip install --refresh "xgic-cli>=0.2.1,<0.3" "xgic-dev-cli==${VER}"; then
+              ok=1
+              break
+            fi
             sleep 15
           done
+          test "$ok" -eq 1
           xgic --version
           xgic up --help
           python -c "from xgic.cli import __version__; from xgic.cli.dev import DockerComposeController; print(__version__)"

@@ -2,7 +2,7 @@
 
 from xgic.cli.dev.docker import DockerComposeController
 
-__version__ = "0.2.1rc1"
+__version__ = "0.2.1rc2"
 
 __all__ = [
     "DockerComposeController",
