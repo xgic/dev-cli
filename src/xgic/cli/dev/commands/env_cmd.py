@@ -16,7 +16,8 @@ def run_env(ctx: CommandContext) -> int:
     """Inspect development environment status (no regenerate in this module)."""
     docker = make_docker(ctx.env, ctx.args)
     env_file_exists = ENV_FILE.exists()
-    services_ok = docker.services_running()
+    cli_ok = docker.docker_cli_available()
+    services_ok = docker.services_running() if cli_ok else False
     use_json = bool(getattr(ctx.args, "json", False))
 
     if use_json:
@@ -25,6 +26,7 @@ def run_env(ctx: CommandContext) -> int:
                 {
                     "env_file_exists": env_file_exists,
                     "env_file": str(ENV_FILE),
+                    "docker_cli_available": cli_ok,
                     "services_running": services_ok,
                     "compose_file": docker.compose_file,
                     "project_name": docker.project_name,
@@ -40,9 +42,16 @@ def run_env(ctx: CommandContext) -> int:
     if env_file_exists:
         print_success(f".env file exists at {ENV_FILE}")
     else:
-        print_info(f".env file not found at {ENV_FILE}")
+        print_info(
+            f".env file not found at {ENV_FILE} "
+            "(expected before first product setup)"
+        )
 
-    if services_ok:
+    if not cli_ok:
+        print_info(
+            "Docker CLI not found on PATH; Compose services were not queried"
+        )
+    elif services_ok:
         print_success("Docker Compose services: appear to be running")
     else:
         print_info("Docker Compose services: not detected as running")

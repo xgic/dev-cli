@@ -8,6 +8,7 @@ defaults and config readers live in ``xgic.cli.payload``
 
 from __future__ import annotations
 
+import shutil
 import subprocess
 from dataclasses import dataclass
 
@@ -25,6 +26,10 @@ class DockerComposeController:
     compose_file: str = DEFAULT_COMPOSE_FILE
     project_name: str = DEFAULT_PROJECT_NAME
     primary_service: str | None = None
+
+    def docker_cli_available(self) -> bool:
+        """Return True if a ``docker`` executable is on PATH."""
+        return shutil.which("docker") is not None
 
     def _run_compose(
         self,
@@ -66,7 +71,9 @@ class DockerComposeController:
             if target is None:
                 return True
             return target in running
-        except (subprocess.CalledProcessError, FileNotFoundError):
+        except FileNotFoundError:
+            return False
+        except subprocess.CalledProcessError:
             return False
 
     def up(
