@@ -47,6 +47,7 @@ def test_run_check_json(capsys) -> None:
     with patch("xgic.cli.dev.commands.check.make_docker") as make:
         docker = MagicMock()
         docker.services_running.return_value = True
+        docker.docker_cli_available.return_value = True
         docker.compose_file = ".devcontainer/docker-compose.yml"
         docker.project_name = "xgic-dev"
         docker.primary_service = "app"
@@ -54,7 +55,34 @@ def test_run_check_json(capsys) -> None:
         assert run_check(ctx) == 0
     data = json.loads(capsys.readouterr().out)
     assert data["services_running"] is True
+    assert data["docker_cli_available"] is True
     assert data["overall_ok"] is True
+
+
+def test_run_check_json_without_docker_cli(capsys) -> None:
+    ns = argparse.Namespace(
+        compose_file=None,
+        project=None,
+        service=None,
+        profile=None,
+        json=True,
+    )
+    env = EnvironmentContext(env_type=EnvironmentType.DEV_CONTAINER)
+    ctx = CommandContext(env=env, args=ns)
+    with patch("xgic.cli.dev.commands.check.make_docker") as make:
+        docker = MagicMock()
+        docker.docker_cli_available.return_value = False
+        docker.services_running.return_value = False
+        docker.compose_file = ".devcontainer/docker-compose.yml"
+        docker.project_name = "xgic-wagtail"
+        docker.primary_service = "xgic-wagtail"
+        make.return_value = docker
+        assert run_check(ctx) == 1
+    data = json.loads(capsys.readouterr().out)
+    assert data["docker_cli_available"] is False
+    assert data["services_running"] is False
+    assert data["overall_ok"] is False
+    docker.services_running.assert_not_called()
 
 
 def test_run_env_status(capsys) -> None:
@@ -70,6 +98,7 @@ def test_run_env_status(capsys) -> None:
     with patch("xgic.cli.dev.commands.env_cmd.make_docker") as make:
         docker = MagicMock()
         docker.services_running.return_value = False
+        docker.docker_cli_available.return_value = True
         docker.compose_file = "cf"
         docker.project_name = "pn"
         docker.primary_service = None

@@ -7,14 +7,30 @@ from pathlib import Path
 
 from xgic.cli.app import CommandContext
 from xgic.cli.dev.context import make_docker, resolve_profile
-from xgic.cli.utils.output import print_info, print_success, print_warning
+from xgic.cli.dev.docker import DockerComposeController
+from xgic.cli.utils.output import print_error, print_info, print_success, print_warning
 
 ENV_FILE = Path(".devcontainer/.env")
+
+_NO_DOCKER_CLI = (
+    "Docker CLI not found on PATH. Compose lifecycle commands need a Docker "
+    "client talking to the host engine (Docker-outside-of-Docker). This image "
+    "must install docker-ce-cli; do not enable Docker-in-Docker."
+)
+
+
+def _require_docker(docker: DockerComposeController) -> int | None:
+    if docker.docker_cli_available():
+        return None
+    print_error(_NO_DOCKER_CLI)
+    return 2
 
 
 def run_up(ctx: CommandContext) -> int:
     """Start compose services in detached mode."""
     docker = make_docker(ctx.env, ctx.args)
+    if (rc := _require_docker(docker)) is not None:
+        return rc
     profile = resolve_profile(ctx.args)
     print_info("Starting services...")
     docker.up(profile=profile)
@@ -25,6 +41,8 @@ def run_up(ctx: CommandContext) -> int:
 def run_down(ctx: CommandContext) -> int:
     """Stop services (volumes preserved)."""
     docker = make_docker(ctx.env, ctx.args)
+    if (rc := _require_docker(docker)) is not None:
+        return rc
     print_info("Stopping services...")
     docker.down()
     print_success("Services stopped (volumes preserved)")
@@ -34,6 +52,8 @@ def run_down(ctx: CommandContext) -> int:
 def run_build(ctx: CommandContext) -> int:
     """Build compose images."""
     docker = make_docker(ctx.env, ctx.args)
+    if (rc := _require_docker(docker)) is not None:
+        return rc
     no_cache = bool(getattr(ctx.args, "no_cache", False))
     print_info("Building services" + (" (no cache)" if no_cache else "") + "...")
     docker.build(no_cache=no_cache)
@@ -44,6 +64,8 @@ def run_build(ctx: CommandContext) -> int:
 def run_logs(ctx: CommandContext) -> int:
     """Follow logs for all services (blocks until interrupted)."""
     docker = make_docker(ctx.env, ctx.args)
+    if (rc := _require_docker(docker)) is not None:
+        return rc
     print_info("Following logs (press Ctrl+C to exit)...")
     docker.logs(follow=True)
     return 0
@@ -52,6 +74,8 @@ def run_logs(ctx: CommandContext) -> int:
 def run_shell(ctx: CommandContext) -> int:
     """Open an interactive shell in the primary service."""
     docker = make_docker(ctx.env, ctx.args)
+    if (rc := _require_docker(docker)) is not None:
+        return rc
     service = docker.primary_service
     if not service:
         print_warning(
@@ -70,6 +94,8 @@ def run_shell(ctx: CommandContext) -> int:
 def run_clean(ctx: CommandContext) -> int:
     """Full environment cleanup (volumes + .env). Extremely destructive."""
     docker = make_docker(ctx.env, ctx.args)
+    if (rc := _require_docker(docker)) is not None:
+        return rc
     yes = bool(getattr(ctx.args, "yes", False))
 
     print_warning(

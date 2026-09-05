@@ -100,8 +100,8 @@ Registered on the core `xgic` entrypoint:
 | Flag | Env var | Default |
 |------|---------|---------|
 | `--compose-file` | `XGIC_COMPOSE_FILE` | `.devcontainer/docker-compose.yml` |
-| `--project` | `XGIC_COMPOSE_PROJECT` | `xgic-dev` |
-| `--service` | `XGIC_PRIMARY_SERVICE` | (none) |
+| `--project` | `XGIC_COMPOSE_PROJECT` | Compose file `name:` (else `xgic-dev`) |
+| `--service` | `XGIC_PRIMARY_SERVICE` | `devcontainer.json` `service` (else none) |
 | `--profile` | `XGIC_COMPOSE_PROFILE` | (none; used by `up`) |
 
 **Note:** Payload-specific env regenerate / setup lives in **[payload-cms-cli](https://github.com/xgic/payload-cms-cli)** (`xgic payload env`, `xgic payload setup`, …).

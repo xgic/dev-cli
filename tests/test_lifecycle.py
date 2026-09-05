@@ -11,6 +11,7 @@ from xgic.cli.core.environment import EnvironmentContext, EnvironmentType
 from xgic.cli.dev.commands.lifecycle import (
     run_clean,
     run_down,
+    run_logs,
     run_shell,
     run_up,
 )
@@ -29,6 +30,15 @@ def _ctx(**kwargs: object) -> CommandContext:
     ns = argparse.Namespace(**defaults)
     env = EnvironmentContext(env_type=EnvironmentType.HOST)
     return CommandContext(env=env, args=ns)
+
+
+def test_run_logs_without_docker_cli() -> None:
+    with patch("xgic.cli.dev.commands.lifecycle.make_docker") as make:
+        docker = MagicMock()
+        docker.docker_cli_available.return_value = False
+        make.return_value = docker
+        assert run_logs(_ctx()) == 2
+        docker.logs.assert_not_called()
 
 
 def test_run_up_calls_docker_up() -> None:
