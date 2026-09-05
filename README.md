@@ -51,7 +51,7 @@ Humans get a stable command map. AI agents get the same map in [AGENTS.md](AGENT
 ### Install (PyPI)
 
 ```bash
-uv pip install "xgic-dev-cli>=0.2.0"
+uv pip install "xgic-dev-cli>=0.2.1"
 xgic --help
 xgic up --help
 ```
