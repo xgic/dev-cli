@@ -139,6 +139,8 @@ docker.up(profile="postgres")
 Follow [python-package-release.md](https://github.com/xgic/ai/blob/main/docs/python-package-release.md).
 
 Publish **after** `xgic-cli` for stack releases. Tags: `vX.Y.ZrcN` → TestPyPI; `vX.Y.Z` → PyPI.
+The release milestone is titled `X.Y.Z`, matching the published version. Set it on every issue and pull request in that release. GitHub does not copy the issue milestone onto the pull request. The candidate and the final publish share it.
+[Work tracking](https://github.com/xgic/ai/blob/main/docs/work-tracking-and-checklists.md).
 
 ---
 

@@ -28,5 +28,6 @@ Public repository. Follow https://github.com/xgic/ai for multi-repo standards.
 - Dedicated issue-number branches; Conventional Commits  
 - **Labels (mandatory):** Every issue and pull request gets exactly one type label in the create call: `bug`, `enhancement`, `documentation`, `standards`, or `chore`. Welcome Discussion posts use `welcome` and `documentation`. Do not put scoped GitLab labels on GitHub. https://github.com/xgic/ai/blob/main/docs/community-health.md#labels-required  
 - Python 3.14+; Apache-2.0; root `CODEOWNERS` (`@xgic`)  
-- **PyPI releases:** https://github.com/xgic/ai/blob/main/docs/python-package-release.md (OIDC + PyPA action; `uv` build/smoke)  
+- **PyPI releases:** https://github.com/xgic/ai/blob/main/docs/python-package-release.md (OIDC + PyPA action; `uv` build/smoke)
+- **Release milestone:** titled `X.Y.Z`, matching the published version. The Git tag stays `vX.Y.Z`. Set it on every issue and pull request included in the release. GitHub does not copy the issue milestone onto the pull request. The candidate and the final publish share it. When the shipped version changes, move both to that `X.Y.Z` before the milestone closes. Close the parent issue, then the milestone, after the final publish and its acceptance. https://github.com/xgic/ai/blob/main/docs/work-tracking-and-checklists.md  
 
